@@ -1,9 +1,5 @@
-
-# Project Title
-
+New title: small devop pipeline with trigger, no hook
 pipeline that checks github repo  every minute to initiate build
-
-
 
 ## Pipeline Stages
 
