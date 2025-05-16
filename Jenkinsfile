@@ -4,50 +4,50 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Simulating build...'
-                sh 'echo Building code'
+                echo 'Building the code with Maven...'
+                sh 'mvn clean package'
             }
         }
 
-        stage('Unit Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests...'
-                sh 'echo All tests passed'
+                echo 'Running unit tests with JUnit and integration tests with TestNG...'
+                sh 'mvn test'
             }
         }
 
         stage('Code Analysis') {
             steps {
-                echo 'Running static analysis...'
-                sh 'echo Code looks clean'
+                echo 'Analyzing code with SonarQube...'
+                sh 'sonar-scanner -Dsonar.projectKey=myProject'
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Scanning for vulnerabilities...'
-                sh 'echo No critical issues found'
+                echo 'Performing security scan with OWASP Dependency-Check...'
+                sh 'dependency-check.sh --project myProject --scan .'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to staging...'
-                sh 'echo Deployed to staging server'
+                echo 'Deploying application to staging environment (AWS EC2)...'
+                sh './deploy-to-ec2.sh staging'
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging...'
-                sh 'echo Integration test passed'
+                echo 'Running integration tests on staging with Postman/Newman...'
+                sh 'newman run tests.postman_collection.json -e staging_environment.json'
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production...'
-                sh 'echo Deployed to production server'
+                echo 'Deploying application to production environment (AWS EC2)...'
+                sh './deploy-to-ec2.sh production'
             }
         }
     }
