@@ -4,51 +4,60 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the code with Maven...'
-                sh 'mvn clean package'
+                echo 'Building the code...'
+                // Tool: Maven (used for compiling and packaging the application)
+                // Command: mvn clean package
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests with JUnit and integration tests with TestNG...'
-                sh 'mvn test'
+                echo 'Running unit and integration tests...'
+                // Tool: JUnit for unit testing, TestNG for integration tests
+                // Command: mvn test
             }
         }
 
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing code with SonarQube...'
-                sh 'sonar-scanner -Dsonar.projectKey=myProject'
+                echo 'Analyzing code quality...'
+                // Tool: SonarQube
+                // Command: mvn sonar:sonar
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan with OWASP Dependency-Check...'
-                sh 'dependency-check.sh --project myProject --scan .'
+                echo 'Performing security scan...'
+                // Tool: OWASP Dependency-Check
+                // Command: mvn org.owasp:dependency-check-maven:check
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying application to staging environment (AWS EC2)...'
-                sh './deploy-to-ec2.sh staging'
+                echo 'Deploying to staging environment...'
+                // Tool: AWS CLI or custom deployment script
+                // Command: ./deploy-staging.sh
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging with Postman/Newman...'
-                sh 'newman run tests.postman_collection.json -e staging_environment.json'
+                echo 'Running integration tests in staging...'
+                // Tool: Postman/Newman or custom test suite
+                // Command: ./run-staging-tests.sh
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying application to production environment (AWS EC2)...'
-                sh './deploy-to-ec2.sh production'
+                echo 'Deploying to production environment...'
+                // Tool: AWS CLI, Kubernetes, or custom deployment script
+                // Command: ./deploy-prod.sh
             }
         }
     }
 }
+
+
