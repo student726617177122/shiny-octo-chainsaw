@@ -1,0 +1,2 @@
+testing jenkins polling GitHub repo every minute 
+* * * * *
